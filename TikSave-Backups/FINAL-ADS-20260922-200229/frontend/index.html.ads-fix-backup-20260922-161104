@@ -1,7 +1,4 @@
-﻿<!-- TIKSAVE-DEPLOY:20260922-200229 -->
-
-
-<!doctype html>
+﻿<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta name="google-adsense-account" content="ca-pub-1344832430988779">
@@ -97,44 +94,6 @@ padding:10px 22px;
 border-radius:12px;
 text-decoration:none;
 font-weight:700;
-}
-</style>
-<style id="tiksave-ads-system">
-.tiksave-real-ads{
-width:100%;
-max-width:1100px;
-margin:30px auto;
-padding:0 15px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:20px;
-box-sizing:border-box;
-}
-.tiksave-ad-box{
-min-height:100px;
-border:1px solid rgba(127,127,127,.25);
-border-radius:18px;
-padding:12px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:flex-start;
-overflow:hidden;
-box-sizing:border-box;
-}
-.tiksave-ad-300{
-min-height:285px;
-}
-.tiksave-ad-label{
-font:10px Arial,sans-serif;
-letter-spacing:2px;
-opacity:.45;
-margin-bottom:10px;
-}
-@media(max-width:700px){
-.tiksave-real-ads{
-grid-template-columns:1fr;
-}
 }
 </style>
 </head>
@@ -324,28 +283,6 @@ rel="nofollow sponsored noopener">
 </a>
 </div>
 <!-- TIKSAVE SMARTLINK END -->
-
-<!-- TIKSAVE EXTRA ADS START -->
-
-<div class="tiksave-real-ad tiksave-ad-script">
-<script src="https://pl31460215.profitableratecpmnetwork.com/83/10/89/8310898a22e36283ec13400befc3e03a.js"></script>
-</div>
-
-<div class="tiksave-real-ad tiksave-ad-300">
-<script>
-atOptions = {
-'key' : '99cd326f912da2a6a961482b4ba65dc6',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
-};
-</script>
-<script src="https://www.highrevenueformat.com/99cd326f912da2a6a961482b4ba65dc6/invoke.js"></script>
-</div>
-
-<!-- TIKSAVE EXTRA ADS END -->
-
 </body>
 </html>
 
@@ -358,10 +295,6 @@ atOptions = {
 <a href="pages/disclaimer.html">Disclaimer</a> |
 <a href="pages/copyright.html">Copyright</a>
 </footer>
-
-
-
-
 
 
 
