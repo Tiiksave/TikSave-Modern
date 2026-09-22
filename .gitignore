@@ -9,7 +9,8 @@ node_modules/
 .env
 backup/
 downloads/
+TikSave-Backups/
 frontend/*.ads-backup-*
+frontend/*.ads-fix-backup-*
 frontend/*.bak
 frontend/*.backup*
-frontend/*.before*
