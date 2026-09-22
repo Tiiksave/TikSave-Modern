@@ -1,5 +1,4 @@
-﻿<!-- TIKSAVE-DEPLOY:20260922-162018 -->
-<!doctype html>
+﻿<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta name="google-adsense-account" content="ca-pub-1344832430988779">
@@ -68,35 +67,6 @@ h1{letter-spacing:-2px}
 .qualities .q{min-width:70px}
 }
 </style>
-<style id="tiksave-real-ads-style">
-.tiksave-real-ad{
-display:flex;
-justify-content:center;
-align-items:center;
-width:100%;
-min-height:90px;
-margin:18px auto;
-overflow:hidden;
-text-align:center;
-}
-.tiksave-ad-native{min-height:100px}
-.tiksave-ad-300{min-height:250px}
-.tiksave-ad-script{min-height:90px}
-.tiksave-smartlink{
-display:flex;
-justify-content:center;
-margin:16px auto;
-}
-.tiksave-smartlink a{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:10px 22px;
-border-radius:12px;
-text-decoration:none;
-font-weight:700;
-}
-</style>
 </head>
 <body>
 
@@ -133,12 +103,7 @@ font-weight:700;
 <main class="wrap">
 
 <div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
+<div class="ad-slot">إعلان — مساحة إعلانية</div>
 </div>
 
 <section class="features">
@@ -149,21 +114,11 @@ font-weight:700;
 </section>
 
 <div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
+<div class="ad-slot">إعلان — مساحة إعلانية</div>
 </div>
 
 <div class="after-ad" id="afterDownloadAd">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
+<div class="ad-slot">إعلان بعد الضغط على تحميل</div>
 </div>
 
 <div class="status" id="status">
@@ -175,12 +130,7 @@ font-weight:700;
 </div>
 
 <div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
+<div class="ad-slot">إعلان — مساحة إعلانية</div>
 </div>
 
 </main>
@@ -275,37 +225,6 @@ document.documentElement.dir=l==="ar"?"rtl":"ltr";document.documentElement.lang=
 <h2>Copyright & DMCA</h2>
 <p>If you believe your copyrighted content has been used incorrectly, please contact us with the required details.</p>
 </section>
-<!-- TIKSAVE SMARTLINK START -->
-<div class="tiksave-smartlink">
-<a href="https://www.profitableratecpmnetwork.com/vvn9bncd0?key=43ec534e06ae73e044b33ce9bc843311"
-target="_blank"
-rel="nofollow sponsored noopener">
-عرض المزيد
-</a>
-</div>
-<!-- TIKSAVE SMARTLINK END -->
-
-<!-- TIKSAVE EXTRA ADS START -->
-
-<div class="tiksave-real-ad tiksave-ad-script">
-<script src="https://pl31460215.profitableratecpmnetwork.com/83/10/89/8310898a22e36283ec13400befc3e03a.js"></script>
-</div>
-
-<div class="tiksave-real-ad tiksave-ad-300">
-<script>
-atOptions = {
-'key' : '99cd326f912da2a6a961482b4ba65dc6',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
-};
-</script>
-<script src="https://www.highrevenueformat.com/99cd326f912da2a6a961482b4ba65dc6/invoke.js"></script>
-</div>
-
-<!-- TIKSAVE EXTRA ADS END -->
-
 </body>
 </html>
 
@@ -318,9 +237,6 @@ atOptions = {
 <a href="pages/disclaimer.html">Disclaimer</a> |
 <a href="pages/copyright.html">Copyright</a>
 </footer>
-
-
-
 
 
 
