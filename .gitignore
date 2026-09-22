@@ -1,0 +1,11 @@
+﻿.venv/
+__pycache__/
+*.pyc
+*.bak
+*.backup*
+*.before*
+*.zip
+node_modules/
+.env
+backup/
+downloads/
