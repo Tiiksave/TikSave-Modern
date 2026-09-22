@@ -9,3 +9,7 @@ node_modules/
 .env
 backup/
 downloads/
+frontend/*.ads-backup-*
+frontend/*.bak
+frontend/*.backup*
+frontend/*.before*
