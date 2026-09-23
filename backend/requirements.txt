@@ -1,7 +1,4 @@
 ﻿Flask>=3.0,<4
 flask-cors>=4.0,<7
-yt-dlp>=2026.09.01
+yt-dlp
 gunicorn
-
-
-bgutil-ytdlp-pot-provider
