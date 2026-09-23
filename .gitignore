@@ -15,3 +15,5 @@ frontend/*.backup*
 frontend/*.before*
 frontend/index.html.ads-backup-*
 frontend/index.html.ads-fix-backup-*
+
+.wrangler/

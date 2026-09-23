@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://tiiksave.pages.dev/sitemap.xml
