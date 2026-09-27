@@ -1,375 +1,584 @@
-﻿<!-- TIKSAVE-DEPLOY:20260922-200229 -->
-
-
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head><meta name="description" content="TikSave خدمة مجانية لتحميل الفيديوهات من مختلف المنصات بسهولة وسرعة."><meta name="robots" content="index,follow"><link rel="canonical" href="https://tiiksave.pages.dev/">
-<meta name="google-adsense-account" content="ca-pub-1344832430988779">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1344832430988779" crossorigin="anonymous"></script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TiikSave - تحميل الفيديو</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,"Segoe UI",sans-serif;color:#172033;background:#fff}
-button,input,select{font:inherit}
-.wrap{max-width:1180px;margin:auto;padding:0 22px}
-header{height:72px;border-bottom:1px solid #eee;background:#fff;display:flex;align-items:center;position:sticky;top:0;z-index:20}
-.head{width:100%;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:28px;font-weight:900;letter-spacing:-1.5px}
-.logo span{color:#f22972}
-nav{display:flex;gap:28px;font-size:14px;color:#5e6675}
-nav b{color:#f22972}
-.lang{border:1px solid #e7e7e7;background:#fff;border-radius:13px;padding:9px 13px}
-.hero{position:relative;overflow:hidden;padding:70px 0 48px;background:linear-gradient(120deg,#f4f8ff 0%,#fff 48%,#fff0f7 100%)}
-.hero:before{content:"";position:absolute;width:400px;height:400px;background:#e9dcff;filter:blur(90px);opacity:.45;left:-100px;top:40px;border-radius:50%}
-.hero:after{content:"";position:absolute;width:400px;height:400px;background:#ffc8df;filter:blur(100px);opacity:.35;right:-120px;top:0;border-radius:50%}
-.hero-inner{position:relative;z-index:1;text-align:center}
-.badge{display:inline-block;padding:8px 15px;border-radius:30px;background:#fff;border:1px solid #f3d8e5;color:#ed3474;font-size:13px;font-weight:700}
-h1{font-size:clamp(40px,6vw,65px);line-height:1.05;margin:18px 0 12px;letter-spacing:-3px}
-h1 span{color:#ed2670}
-.subtitle{max-width:620px;margin:0 auto 30px;color:#6f7785;line-height:1.8;font-size:16px}
-.download-card{max-width:880px;margin:auto;background:#fff;border:1px solid #eee;border-radius:25px;padding:9px;box-shadow:0 18px 60px rgba(39,42,65,.10)}
-.input-row{display:flex;gap:8px}
-#url{flex:1;min-width:0;border:0;background:#f7f8fb;border-radius:17px;padding:18px;outline:0;direction:ltr}
-#downloadBtn{border:0;border-radius:17px;background:#f22972;color:#fff;padding:0 28px;font-weight:800;cursor:pointer;min-width:145px;box-shadow:0 8px 22px rgba(242,41,114,.2)}
-#downloadBtn:hover{background:#d91d61}
-#downloadBtn:disabled{opacity:.55;cursor:wait}
-.qualities{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;padding:15px 5px 5px}
-.q{min-width:88px;border:1px solid #e8ebf0;background:#fff;border-radius:13px;padding:10px 13px;cursor:pointer;font-weight:700;color:#505867}
-.q.active{background:#f22972;color:#fff;border-color:#f22972}
-.ad-area{max-width:1000px;margin:18px auto;display:grid;gap:16px}
-.ad-slot{min-height:82px;border:1px dashed #d9dee7;border-radius:17px;background:#fbfcfe;display:flex;align-items:center;justify-content:center;color:#a4aab5;font-size:12px}
-.features{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;max-width:1000px;margin:35px auto}
-.feature{background:#fff;border:1px solid #e9edf3;border-radius:19px;padding:22px;text-align:center;box-shadow:0 7px 25px rgba(30,40,70,.04)}
-.ico{width:46px;height:46px;margin:0 auto 12px;border-radius:50%;background:#fff0f6;color:#ef2871;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px}
-.feature h3{margin:5px 0 8px;font-size:15px}
-.feature p{margin:0;color:#8a909b;font-size:12px;line-height:1.7}
-.status{max-width:700px;margin:25px auto;display:none}
-.status.show{display:block}
-.statusbox{background:#fff;border:1px solid #e7ebf0;border-radius:21px;padding:22px;box-shadow:0 12px 35px rgba(20,30,60,.06)}
-.status-head{display:flex;justify-content:space-between;margin-bottom:15px;font-weight:800}
-.percent{color:#ed2670}
-.bar{height:9px;background:#edf0f4;border-radius:20px;overflow:hidden}
-.fill{height:100%;width:0;background:linear-gradient(90deg,#ed2670,#ff71a3);transition:width .3s}
-.result{display:none;text-align:center;margin-top:18px}
-.result a{display:inline-block;background:#111;color:#fff;text-decoration:none;padding:13px 25px;border-radius:13px;font-weight:800}
-.after-ad{display:none;max-width:700px;margin:20px auto}.after-ad.show{display:block}
-footer{margin-top:60px;padding:30px 0;border-top:1px solid #eee;color:#999;text-align:center;font-size:12px}
-@media(max-width:750px){
-nav{display:none}
-.hero{padding:50px 0 35px}
-h1{letter-spacing:-2px}
-.input-row{flex-direction:column}
-#url,#downloadBtn{height:55px}
-.features{grid-template-columns:1fr 1fr}
-}
-@media(max-width:480px){
-.wrap{padding:0 14px}
-.features{grid-template-columns:1fr}
-.qualities .q{min-width:70px}
-}
-</style>
-<style id="tiksave-real-ads-style">
-.tiksave-real-ad{
-display:flex;
-justify-content:center;
-align-items:center;
-width:100%;
-min-height:90px;
-margin:18px auto;
-overflow:hidden;
-text-align:center;
-}
-.tiksave-ad-native{min-height:100px}
-.tiksave-ad-300{min-height:250px}
-.tiksave-ad-script{min-height:90px}
-.tiksave-smartlink{
-display:flex;
-justify-content:center;
-margin:16px auto;
-}
-.tiksave-smartlink a{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-padding:10px 22px;
-border-radius:12px;
-text-decoration:none;
-font-weight:700;
-}
-</style>
-<style id="tiksave-ads-system">
-.tiksave-real-ads{
-width:100%;
-max-width:1100px;
-margin:30px auto;
-padding:0 15px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:20px;
-box-sizing:border-box;
-}
-.tiksave-ad-box{
-min-height:100px;
-border:1px solid rgba(127,127,127,.25);
-border-radius:18px;
-padding:12px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:flex-start;
-overflow:hidden;
-box-sizing:border-box;
-}
-.tiksave-ad-300{
-min-height:285px;
-}
-.tiksave-ad-label{
-font:10px Arial,sans-serif;
-letter-spacing:2px;
-opacity:.45;
-margin-bottom:10px;
-}
-@media(max-width:700px){
-.tiksave-real-ads{
-grid-template-columns:1fr;
-}
-}
-</style>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="TikSave — تنزيل فيديوهات تيك توك بسهولة وسرعة.">
+  <title>TikSave | تنزيل الفيديوهات</title>
+  <style>
+    :root {
+      --bg: #fffafc;
+      --panel: #ffffff;
+      --panel-soft: #f6f7fb;
+      --line: #ececf4;
+      --text: #1f2430;
+      --muted: #687385;
+      --pink: #f22972;
+      --pink-dark: #d91d61;
+      --pink-soft: #fff0f6;
+      --shadow: 0 18px 45px rgba(31, 36, 48, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #fffafc 0%, #ffffff 30%, #fff9fb 100%);
+      color: var(--text);
+    }
+
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+
+    .container {
+      width: min(1100px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 74px;
+    }
+
+    .brand {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+    }
+
+    .brand span { color: var(--pink); }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .nav a:hover { color: var(--pink); }
+
+    .hero {
+      padding: 58px 0 20px;
+    }
+
+    .hero-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 34px 22px 18px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    .hero-card::before {
+      left: -60px;
+      top: -60px;
+      background: #e9dcff;
+    }
+
+    .hero-card::after {
+      right: -50px;
+      bottom: -80px;
+      background: #ffc7e0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--pink-soft);
+      color: var(--pink);
+      border: 1px solid #f6cfe0;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    h1 span { color: var(--pink); }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 16px auto 28px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .download-box {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 12px;
+      box-shadow: 0 15px 35px rgba(34, 42, 58, 0.06);
+    }
+
+    .download-row {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    #url {
+      width: 100%;
+      border: 1px solid transparent;
+      background: white;
+      border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 1rem;
+      direction: ltr;
+      outline: none;
+      color: var(--text);
+    }
+
+    #downloadBtn {
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--pink-dark) 100%);
+      color: white;
+      padding: 0 26px;
+      min-width: 170px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    #downloadBtn:hover { transform: translateY(-1px); }
+    #downloadBtn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .quality-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .quality {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 12px;
+      padding: 10px 14px;
+      color: var(--muted);
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quality.active {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: white;
+    }
+
+    .status-box {
+      max-width: 720px;
+      margin: 26px auto 0;
+      display: none;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px 22px;
+    }
+
+    .status-box.show { display: block; }
+
+    .status-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .percent {
+      color: var(--pink);
+      min-width: 52px;
+      text-align: left;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #eef0f5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--pink), #ff7fb0);
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .result {
+      margin-top: 18px;
+      display: none;
+      text-align: center;
+    }
+
+    .result.show { display: block; }
+
+    .result a {
+      display: inline-block;
+      background: #0e1116;
+      color: white;
+      padding: 13px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      padding: 26px 0 18px;
+    }
+
+    .feature {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(27, 35, 51, 0.04);
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: var(--pink-soft);
+      color: var(--pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.4rem;
+    }
+
+    .feature h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      padding: 18px 0 26px;
+    }
+
+    .info-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 20px;
+      color: var(--muted);
+      line-height: 1.8;
+      box-shadow: 0 12px 28px rgba(27, 35, 51, 0.04);
+    }
+
+    .info-box h2 {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 1.2rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: #fff;
+      padding: 26px 0 42px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    @media (max-width: 760px) {
+      .nav { display: none; }
+      .download-row { flex-direction: column; }
+      .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #downloadBtn { min-height: 56px; }
+      #url { min-height: 56px; }
+    }
+
+    @media (max-width: 480px) {
+      .features { grid-template-columns: 1fr; }
+      .quality { flex: 1 1 42%; }
+      .status-head { font-size: 0.9rem; }
+    }
+  </style>
 </head>
-<body><section id="tiksave-service" style="text-align:center;padding:12px 16px;margin:0 auto;max-width:900px"><strong>TikSave — تحميل الفيديوهات</strong><div style="margin-top:5px">خدمة مجانية لتحميل الفيديوهات من مختلف المنصات بسهولة وسرعة.</div></section>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">Tik<span>Save</span></div>
+      <nav class="nav">
+        <a href="#">الرئيسية</a>
+        <a href="#features">المميزات</a>
+        <a href="#faq">الأسئلة</a>
+      </nav>
+    </div>
+  </header>
 
-<header><meta name="description" content="TikSave خدمة مجانية لتحميل الفيديوهات من مختلف المنصات بسهولة وسرعة."><meta name="robots" content="index,follow"><link rel="canonical" href="https://tiiksave.pages.dev/">
-<div class="wrap head">
-<div class="logo">Tik<span>Save</span></div>
-<nav><b id="navHome">الرئيسية</b><span id="navFeatures">المميزات</span><span id="navHow">كيفية الاستخدام</span><span id="navFaq">الأسئلة الشائعة</span></nav>
-<select class="lang" id="lang"><option value="ar">العربية</option><option value="en">English</option><option value="tr">Türkçe</option><option value="fr">Français</option></select>
-</div>
-</header>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-inner">
+          <div class="badge">⚡ تنزيل سريع وسهل</div>
+          <h1>حمّل فيديوهاتك من تيك توك<br><span>بكل سهولة</span></h1>
+          <p class="subtitle">انسخ رابط الفيديو، اختر الجودة المناسبة، واضغط تحميل. تجربة بسيطة، سريعة، وآمنة للكمبيوتر والهاتف.</p>
 
-<section class="hero">
-<div class="wrap hero-inner">
-<div class="badge" id="badge">⚡ تحميل سريع وسهل</div>
-<h1 id="heading">حمّل فيديوهاتك من تيك توك<br><span>بكل سهولة</span></h1>
-<p class="subtitle" id="sub">انسخ رابط الفيديو، اختر الجودة المناسبة، واضغط تحميل. واجهة بسيطة وسريعة تعمل على جميع الأجهزة.</p>
+          <div class="download-box">
+            <div class="download-row">
+              <input id="url" type="url" placeholder="ألصق رابط الفيديو هنا..." autocomplete="off">
+              <button id="downloadBtn">تحميل</button>
+            </div>
 
-<div class="download-card">
-<div class="input-row">
-<input id="url" type="url" placeholder="ألصق رابط الفيديو هنا..." autocomplete="off">
-<button id="downloadBtn">تحميل</button>
-</div>
-<div class="qualities">
-<div class="q active" data-q="best">أفضل جودة</div>
-<div class="q" data-q="2160">4K</div>
-<div class="q" data-q="1080">1080p</div>
-<div class="q" data-q="720">720p</div>
-<div class="q" data-q="480">480p</div>
-</div>
-</div>
-</div>
-</section>
+            <div class="quality-row">
+              <div class="quality active" data-quality="best">أفضل جودة</div>
+              <div class="quality" data-quality="2160">4K</div>
+              <div class="quality" data-quality="1080">1080p</div>
+              <div class="quality" data-quality="720">720p</div>
+              <div class="quality" data-quality="480">480p</div>
+            </div>
+          </div>
 
-<main class="wrap">
+          <div class="status-box" id="statusBox">
+            <div class="status-head">
+              <span id="statusText">جاري تجهيز التحميل...</span>
+              <span class="percent" id="percent">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div id="result" class="result"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
-</div>
+    <section class="features" id="features">
+      <article class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>سرعة عالية</h3>
+        <p>تحميل سريع وسلس من رابط الفيديو.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">HD</div>
+        <h3>جودة متعددة</h3>
+        <p>اختر من 480p إلى 4K حسب احتياجك.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">✓</div>
+        <h3>سهل الاستخدام</h3>
+        <p>واجهة نظيفة ومباشرة لا تحتاج إلى تعقيد.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">▣</div>
+        <h3>متوافق</h3>
+        <p>يعمل على الهاتف والكمبيوتر والأجهزة اللوحية.</p>
+      </article>
+    </section>
 
-<section class="features">
-<div class="feature"><div class="ico">↯</div><h3 id="f1">سرعة عالية</h3><p id="p1">تحميل الفيديوهات بأقصى سرعة ممكنة.</p></div>
-<div class="feature"><div class="ico">HD</div><h3 id="f2">جودة متعددة</h3><p id="p2">اختر الجودة المناسبة من الخيارات المتاحة.</p></div>
-<div class="feature"><div class="ico">✓</div><h3 id="f3">آمن وموثوق</h3><p id="p3">واجهة بسيطة ولا تحتاج إلى خطوات معقدة.</p></div>
-<div class="feature"><div class="ico">▣</div><h3 id="f4">متوافق مع الأجهزة</h3><p id="p4">يعمل على الكمبيوتر والموبايل والأجهزة اللوحية.</p></div>
-</section>
+    <section class="section" id="faq">
+      <div class="info-box">
+        <h2>معلومات مهمة</h2>
+        <p>TikSave مصمم لتسهيل تنزيل الفيديوهات من الروابط التي لديك. تأكد من امتلاكك الصلاحيات القانونية اللازمة قبل استخدام الخدمة. يتم التعامل مع الروابط بشكل آمن والتحميل يتم مباشرة عبر الخادم بعد تجهيز الملف.</p>
+      </div>
+    </section>
+  </main>
 
-<div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
-</div>
+  <footer>
+    <div class="footer-links">
+      <a href="pages/privacy.html">Privacy Policy</a>
+      <a href="pages/terms.html">Terms of Service</a>
+      <a href="pages/disclaimer.html">Disclaimer</a>
+      <a href="pages/copyright.html">Copyright</a>
+    </div>
+    <div>TiikSave © 2026</div>
+  </footer>
 
-<div class="after-ad" id="afterDownloadAd">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
-</div>
+  <script>
+    const urlInput = document.getElementById('url');
+    const button = document.getElementById('downloadBtn');
+    const statusBox = document.getElementById('statusBox');
+    const statusText = document.getElementById('statusText');
+    const percent = document.getElementById('percent');
+    const progressFill = document.getElementById('progressFill');
+    const resultWrap = document.getElementById('result');
+    let selectedQuality = 'best';
 
-<div class="status" id="status">
-<div class="statusbox">
-<div class="status-head"><span id="statusText">جاري تجهيز التحميل...</span><span class="percent" id="percent">0%</span></div>
-<div class="bar"><div class="fill" id="fill"></div></div>
-<div class="result" id="result"></div>
-</div>
-</div>
+    document.querySelectorAll('.quality').forEach((item) => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.quality').forEach((el) => el.classList.remove('active'));
+        item.classList.add('active');
+        selectedQuality = item.dataset.quality;
+      });
+    });
 
-<div class="ad-area">
-<!-- TIKSAVE ADSTERra NATIVE START -->
-<div class="tiksave-real-ad tiksave-ad-native">
-<script async="async" data-cfasync="false" src="https://pl31460212.profitableratecpmnetwork.com/0ff6fdf566fcf96ae85b84cb8050ff0c/invoke.js"></script>
-<div id="container-0ff6fdf566fcf96ae85b84cb8050ff0c"></div>
-</div>
-<!-- TIKSAVE ADSTERra NATIVE END -->
-</div>
+    function setProgress(value) {
+      const safeValue = Math.min(100, Math.max(0, Number(value) || 0));
+      progressFill.style.width = safeValue + '%';
+      percent.textContent = Math.round(safeValue) + '%';
+    }
 
-</main>
+    function showResultLink(linkHref, fileName) {
+      resultWrap.innerHTML = '';
+      const link = document.createElement('a');
+      link.href = linkHref;
+      link.download = fileName || 'TiikSave.mp4';
+      link.textContent = 'حفظ الملف';
+      resultWrap.appendChild(link);
+      resultWrap.classList.add('show');
+    }
 
-<footer>TiikSave © 2026</footer>
+    async function pollStatus(jobId) {
+      const response = await fetch('/api/status?id=' + encodeURIComponent(jobId), { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error('تعذر التحقق من حالة التحميل');
+      }
+      return response.json();
+    }
 
-<script>
-(function(){
-const $=id=>document.getElementById(id);
-let quality="best";
+    async function startDownload() {
+      const videoUrl = urlInput.value.trim();
+      if (!videoUrl) {
+        alert('ضع رابط الفيديو أولاً');
+        urlInput.focus();
+        return;
+      }
 
-document.querySelectorAll(".q").forEach(q=>q.addEventListener("click",()=>{
-document.querySelectorAll(".q").forEach(x=>x.classList.remove("active"));
-q.classList.add("active");quality=q.dataset.q;
-}));
+      button.disabled = true;
+      statusBox.classList.add('show');
+      resultWrap.classList.remove('show');
+      statusText.textContent = 'جاري بدء التحميل...';
+      setProgress(0);
 
-$("url").addEventListener("keydown",e=>{if(e.key==="Enter")$("downloadBtn").click()});
+      try {
+        const response = await fetch('/api/download?url=' + encodeURIComponent(videoUrl) + '&quality=' + encodeURIComponent(selectedQuality), { cache: 'no-store' });
+        const data = await response.json();
 
-$("downloadBtn").addEventListener("click",async()=>{
-const url=$("url").value.trim();
-if(!url){alert("ضع رابط الفيديو أولاً");$("url").focus();return}
+        if (!response.ok || !data.id) {
+          throw new Error(data.error || 'تعذر بدء التحميل');
+        }
 
-$("downloadBtn").disabled=true;
-$("afterDownloadAd").classList.add("show");
-$("status").classList.add("show");
-$("result").style.display="none";
-$("fill").style.width="0%";
-$("percent").textContent="0%";
-$("statusText").textContent="جاري بدء التحميل...";
+        for (let i = 0; i < 1800; i++) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          const status = await pollStatus(data.id);
 
-const ad5=document.createElement("div");
-ad5.style.cssText="position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
-ad5.innerHTML='<div style="width:min(520px,100%);text-align:center;border:1px solid #eee;border-radius:24px;padding:30px;background:#fff;box-shadow:0 20px 70px rgba(0,0,0,.1)"><div style="font-size:12px;color:#aaa;margin-bottom:14px">إعلان</div><div style="height:100px;display:flex;align-items:center;justify-content:center;border:1px dashed #ddd;border-radius:16px;color:#aaa">مساحة إعلانية</div><div id="adCountdown" style="margin-top:18px;font-weight:800">سيبدأ التحميل خلال 5 ثوانٍ</div></div>';
-document.body.appendChild(ad5);
+          if (status.status === 'error') {
+            throw new Error(status.error || 'فشل التحميل');
+          }
 
-let n=5;
-const ct=setInterval(()=>{n--;$("adCountdown").textContent=n>0?"سيبدأ التحميل خلال "+n+" ثوانٍ":"جاري بدء التحميل...";if(n<=0){clearInterval(ct);ad5.remove()}},1000);
-await new Promise(r=>setTimeout(r,5000));
+          if (status.status === 'done') {
+            const progress = Number(status.progress || 100);
+            setProgress(progress);
+            statusText.textContent = 'اكتمل التحميل';
+            showResultLink('/api/file?id=' + encodeURIComponent(data.id), status.filename || 'TiikSave.mp4');
+            return;
+          }
 
-try{
-const r=await fetch("/api/download?url="+encodeURIComponent(url)+"&quality="+encodeURIComponent(quality),{cache:"no-store"});
-const d=await r.json();
-if(!r.ok||!d.id)throw new Error(d.error||"تعذر بدء التحميل");
+          if (status.status === 'processing') {
+            statusText.textContent = 'جاري تجهيز الملف...';
+            setProgress(100);
+            continue;
+          }
 
-for(let i=0;i<3600;i++){
-await new Promise(x=>setTimeout(x,1000));
-const s=await fetch("/api/status?id="+encodeURIComponent(d.id),{cache:"no-store"});
-const j=await s.json();
-if(j.status==="error")throw new Error(j.error||"فشل التحميل");
-let p=Number(j.progress||0);
-$("fill").style.width=Math.min(100,p)+"%";
-$("percent").textContent=Math.round(p)+"%";
-$("statusText").textContent=j.status==="done"?"اكتمل التحميل":j.status==="processing"?"جاري تجهيز الملف...":"جاري تحميل الفيديو...";
-if(j.status==="done"){
-$("fill").style.width="100%";$("percent").textContent="100%";
-const a=document.createElement("a");
-a.href="/api/file?id="+encodeURIComponent(d.id);
-a.download=j.filename||"TiikSave.mp4";
-a.textContent="حفظ الملف";
-$("result").innerHTML="";$("result").appendChild(a);$("result").style.display="block";a.click();break;
-}
-}
-}catch(e){$("statusText").textContent="حدث خطأ";alert(e.message||"حدث خطأ أثناء التحميل")}
-finally{$("downloadBtn").disabled=false}
-});
+          const progressValue = Number(status.progress || 0);
+          setProgress(progressValue);
+          statusText.textContent = 'جاري تحميل الفيديو...';
+        }
 
-$("lang").addEventListener("change",()=>{
-const l=$("lang").value;
-const d={
-ar:{h:'حمّل فيديوهاتك من تيك توك<br><span>بكل سهولة</span>',s:"انسخ رابط الفيديو، اختر الجودة المناسبة، واضغط تحميل. واجهة بسيطة وسريعة تعمل على جميع الأجهزة.",u:"ألصق رابط الفيديو هنا...",b:"تحميل",badge:"⚡ تحميل سريع وسهل",f:["سرعة عالية","جودة متعددة","آمن وموثوق","متوافق مع الأجهزة"],p:["تحميل الفيديوهات بأقصى سرعة ممكنة.","اختر الجودة المناسبة من الخيارات المتاحة.","واجهة بسيطة ولا تحتاج إلى خطوات معقدة.","يعمل على الكمبيوتر والموبايل والأجهزة اللوحية."]},
-en:{h:'Download your videos<br><span>with ease</span>',s:"Paste the video link, choose the quality and start downloading.",u:"Paste video URL here...",b:"Download",badge:"⚡ Fast and simple downloads",f:["High speed","Multiple quality","Safe & reliable","All devices"],p:["Download videos at the best available speed.","Choose the quality that fits your video.","A simple interface with no complicated steps.","Works on desktop, mobile and tablets."]},
-tr:{h:'Videolarını<br><span>kolayca indir</span>',s:"Video bağlantısını yapıştır, kaliteyi seç ve indirmeye başla.",u:"Video bağlantısını buraya yapıştır...",b:"İndir",badge:"⚡ Hızlı ve kolay indirme",f:["Yüksek hız","Çoklu kalite","Güvenli","Tüm cihazlar"],p:["Videoları mümkün olan en yüksek hızda indir.","Videon için uygun kaliteyi seç.","Karmaşık adımlar olmadan kolay kullanım.","Bilgisayar, mobil ve tabletlerde çalışır."]},
-fr:{h:'Téléchargez vos vidéos<br><span>facilement</span>',s:"Collez le lien, choisissez la qualité et commencez le téléchargement.",u:"Collez le lien vidéo ici...",b:"Télécharger",badge:"⚡ Téléchargement rapide",f:["Grande vitesse","Plusieurs qualités","Sûr et fiable","Tous les appareils"],p:["Téléchargez rapidement vos vidéos.","Choisissez la qualité adaptée.","Une interface simple et claire.","Compatible avec ordinateur, mobile et tablette."]}
-}[l];
+        throw new Error('انتهت مهلة التحميل. حاول مرة أخرى.');
+      } catch (error) {
+        statusText.textContent = 'حدث خطأ';
+        alert(error.message || 'حدث خطأ أثناء التحميل');
+      } finally {
+        button.disabled = false;
+      }
+    }
 
-$("heading").innerHTML=d.h;$("sub").textContent=d.s;$("url").placeholder=d.u;$("downloadBtn").textContent=d.b;$("badge").textContent=d.badge;
-for(let i=0;i<4;i++){$("f"+(i+1)).textContent=d.f[i];$("p"+(i+1)).textContent=d.p[i]}
-document.documentElement.dir=l==="ar"?"rtl":"ltr";document.documentElement.lang=l;
-});
-})();
-</script>
-<section id="legal-info" style="max-width:900px;margin:40px auto;padding:25px;border-radius:16px;">
-<h2>Privacy Policy</h2>
-<p>TikSave respects your privacy. We do not store downloaded content. We may use advertising services to improve and support the website.</p>
-
-<h2>Terms of Service</h2>
-<p>By using TikSave, you agree to use the service responsibly and respect copyright and ownership rights.</p>
-
-<h2>Disclaimer</h2>
-<p>TikSave is a tool for downloading content. Users are responsible for having the necessary rights and permissions for downloaded content.</p>
-
-<h2>Copyright & DMCA</h2>
-<p>If you believe your copyrighted content has been used incorrectly, please contact us with the required details.</p>
-</section>
-<!-- TIKSAVE SMARTLINK START -->
-<div class="tiksave-smartlink">
-<a href="https://www.profitableratecpmnetwork.com/vvn9bncd0?key=43ec534e06ae73e044b33ce9bc843311"
-target="_blank"
-rel="nofollow sponsored noopener">
-عرض المزيد
-</a>
-</div>
-<!-- TIKSAVE SMARTLINK END -->
-
-<!-- TIKSAVE EXTRA ADS START -->
-
-<div class="tiksave-real-ad tiksave-ad-script">
-<script src="https://pl31460215.profitableratecpmnetwork.com/83/10/89/8310898a22e36283ec13400befc3e03a.js"></script>
-</div>
-
-<div class="tiksave-real-ad tiksave-ad-300">
-<script>
-atOptions = {
-'key' : '99cd326f912da2a6a961482b4ba65dc6',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
-};
-</script>
-<script src="https://www.highrevenueformat.com/99cd326f912da2a6a961482b4ba65dc6/invoke.js"></script>
-</div>
-
-<!-- TIKSAVE EXTRA ADS END -->
-
-<!-- TikSave Profitablerate Ad 2 -->
-<div class="tiksave-ad-unit tiksave-ad-profitablerate-2" style="width:100%;min-height:90px;margin:20px auto;text-align:center;overflow:hidden;">
-<script src="https://pl31460213.profitableratecpmnetwork.com/78/8a/bd/788abd3ffcbe3a8af454cd053d31ef5b.js"></script>
-</div></body>
+    button.addEventListener('click', startDownload);
+    urlInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        startDownload();
+      }
+    });
+  </script>
+</body>
 </html>
-
-
-
-
-<footer style="text-align:center;padding:25px;margin-top:40px;">
-<a href="pages/privacy.html">Privacy Policy</a> |
-<a href="pages/terms.html">Terms of Service</a> |
-<a href="pages/disclaimer.html">Disclaimer</a> |
-<a href="pages/copyright.html">Copyright</a>
-</footer>
-
-
-
-
-
-
-
-
-
-
-
-

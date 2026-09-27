@@ -1,10 +1,10 @@
-﻿services:
+services:
   - type: web
     name: tiiksave-backend
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 300
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.10
