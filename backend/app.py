@@ -6,11 +6,13 @@ import os
 import shutil
 import threading
 import uuid
+from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlsplit
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
 import yt_dlp
+from yt_dlp.extractor import gen_extractor_classes
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
@@ -38,15 +40,21 @@ def normalize_quality(raw_quality: str | None) -> str:
     return str(max(240, min(q, 2160)))
 
 
-SUPPORTED_HOSTS = (
-    "youtube.com", "youtu.be", "tiktok.com", "instagram.com", "instagr.am",
-    "facebook.com", "fb.watch", "x.com", "twitter.com", "reddit.com", "redd.it",
-    "pinterest.com", "pin.it", "vimeo.com", "twitch.tv", "soundcloud.com",
-    "snapchat.com", "threads.net", "dailymotion.com", "linkedin.com", "tumblr.com",
-    "streamable.com", "rumble.com", "bilibili.com", "b23.tv", "likee.video",
-    "kwai.com", "kuaishou.com", "odysee.com", "bitchute.com", "vk.com", "ok.ru",
-    "t.me", "telegram.me", "mixcloud.com", "bandcamp.com", "coub.com", "9gag.com",
-)
+@lru_cache(maxsize=512)
+def has_supported_extractor(url: str) -> bool:
+    """Accept URLs recognized by a real yt-dlp site extractor, not its catch-all."""
+    try:
+        extractors = gen_extractor_classes()
+    except Exception:
+        return False
+
+    for extractor in extractors:
+        try:
+            if extractor.ie_key().lower() != "generic" and extractor.suitable(url):
+                return True
+        except Exception:
+            continue
+    return False
 
 
 def is_valid_url(value: str) -> bool:
@@ -69,7 +77,7 @@ def is_valid_url(value: str) -> bool:
     except ValueError:
         pass
 
-    return any(host == domain or host.endswith("." + domain) for domain in SUPPORTED_HOSTS)
+    return has_supported_extractor(value.strip())
 
 
 def clean_partial_files(prefix: str) -> None:
@@ -190,7 +198,7 @@ def api_download():
     quality = normalize_quality(request.args.get("quality", "best"))
 
     if not is_valid_url(url):
-        return jsonify({"error": "الرابط غير صالح أو أن منصته غير مدعومة حالياً"}), 400
+        return jsonify({"error": "الرابط غير صالح أو لا ينتمي إلى موقع يدعمه محرك التحميل"}), 400
 
     job_id = uuid.uuid4().hex
     with jobs_lock:
