@@ -1,1 +1,4 @@
-backend/requirements.txt
+Flask>=3.0,<4
+flask-cors>=4.0,<7
+yt-dlp[default]
+gunicorn

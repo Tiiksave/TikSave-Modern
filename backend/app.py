@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import glob
+import ipaddress
 import os
+import shutil
 import threading
 import uuid
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
 import yt_dlp
@@ -21,19 +24,8 @@ jobs: dict[str, dict] = {}
 jobs_lock = threading.RLock()
 
 
-def ffmpeg_bin() -> str:
-    candidates = [
-        Path("/usr/bin/ffmpeg"),
-        Path("/usr/local/bin/ffmpeg"),
-        Path("/opt/homebrew/bin/ffmpeg"),
-        Path("ffmpeg"),
-    ]
-    for candidate in candidates:
-        if isinstance(candidate, Path) and candidate.exists():
-            return str(candidate)
-        if isinstance(candidate, str) and os.system(f"which {candidate} >/dev/null 2>&1") == 0:
-            return candidate
-    return "ffmpeg"
+def ffmpeg_bin() -> str | None:
+    return shutil.which("ffmpeg")
 
 
 def normalize_quality(raw_quality: str | None) -> str:
@@ -46,13 +38,38 @@ def normalize_quality(raw_quality: str | None) -> str:
     return str(max(240, min(q, 2160)))
 
 
+SUPPORTED_HOSTS = (
+    "youtube.com", "youtu.be", "tiktok.com", "instagram.com", "instagr.am",
+    "facebook.com", "fb.watch", "x.com", "twitter.com", "reddit.com", "redd.it",
+    "pinterest.com", "pin.it", "vimeo.com", "twitch.tv", "soundcloud.com",
+    "snapchat.com", "threads.net", "dailymotion.com", "linkedin.com", "tumblr.com",
+    "streamable.com", "rumble.com", "bilibili.com", "b23.tv", "likee.video",
+    "kwai.com", "kuaishou.com", "odysee.com", "bitchute.com", "vk.com", "ok.ru",
+    "t.me", "telegram.me", "mixcloud.com", "bandcamp.com", "coub.com", "9gag.com",
+)
+
+
 def is_valid_url(value: str) -> bool:
-    if not value:
+    if not value or len(value) > 4096:
         return False
-    url = value.strip()
-    if len(url) < 8:
+    try:
+        parsed = urlsplit(value.strip())
+        host = (parsed.hostname or "").rstrip(".").lower()
+        port = parsed.port
+    except ValueError:
         return False
-    return "http://" in url or "https://" in url
+
+    if parsed.scheme.lower() not in {"http", "https"} or not host:
+        return False
+    if parsed.username or parsed.password or port not in {None, 80, 443}:
+        return False
+    try:
+        ipaddress.ip_address(host)
+        return False
+    except ValueError:
+        pass
+
+    return any(host == domain or host.endswith("." + domain) for domain in SUPPORTED_HOSTS)
 
 
 def clean_partial_files(prefix: str) -> None:
@@ -104,16 +121,25 @@ def worker(job_id: str, url: str, quality: str) -> None:
             "fragment_retries": 3,
             "socket_timeout": 30,
             "skip_download": False,
-            "ffmpeg_location": ffmpeg_bin(),
-            "merge_output_format": "mp4",
             "progress_hooks": [lambda payload, ji=job_id: hook(ji, payload)],
         }
 
-        if quality == "best":
-            opts["format"] = "bestvideo+bestaudio/best"
+        ffmpeg = ffmpeg_bin()
+        bun = shutil.which("bun")
+        if bun:
+            opts["js_runtimes"] = {"bun": {"path": bun}}
+        if ffmpeg:
+            opts["ffmpeg_location"] = ffmpeg
+            opts["merge_output_format"] = "mp4"
+            if quality == "best":
+                opts["format"] = "bestvideo+bestaudio/best"
+            else:
+                q = int(quality)
+                opts["format"] = f"bestvideo[height<={q}]+bestaudio/best[height<={q}]/best"
         else:
-            q = int(quality)
-            opts["format"] = f"bestvideo[height<={q}]+bestaudio/best[height<={q}]/best"
+            # Managed Python hosts may not include ffmpeg. Select a single-file
+            # format there so downloads still work without a merge step.
+            opts["format"] = "best" if quality == "best" else f"best[height<={quality}]/best"
 
         with yt_dlp.YoutubeDL(opts) as ydl:
             info = ydl.extract_info(url, download=True)
@@ -164,7 +190,7 @@ def api_download():
     quality = normalize_quality(request.args.get("quality", "best"))
 
     if not is_valid_url(url):
-        return jsonify({"error": "الرابط غير صالح أو مفقود"}), 400
+        return jsonify({"error": "الرابط غير صالح أو أن منصته غير مدعومة حالياً"}), 400
 
     job_id = uuid.uuid4().hex
     with jobs_lock:
