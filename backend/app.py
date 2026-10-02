@@ -192,9 +192,6 @@ def worker(job_id: str, url: str, quality: str) -> None:
             opts["cookiefile"] = configured_cookies
 
         ffmpeg = ffmpeg_bin()
-        bun = shutil.which("bun")
-        if bun:
-            opts["js_runtimes"] = {"bun": {"path": bun}}
         if ffmpeg:
             opts["ffmpeg_location"] = ffmpeg
             opts["merge_output_format"] = "mp4"
