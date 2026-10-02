@@ -30,6 +30,26 @@ def ffmpeg_bin() -> str | None:
     return shutil.which("ffmpeg")
 
 
+def cookie_file() -> str | None:
+    configured_path = os.environ.get("YTDLP_COOKIE_FILE", "").strip()
+    if not configured_path:
+        return None
+    path = Path(configured_path).expanduser()
+    if not path.is_file() or not os.access(path, os.R_OK):
+        raise RuntimeError("ملف الكوكيز مضبوط بمسار غير موجود أو غير قابل للقراءة.")
+    return str(path.resolve())
+
+
+def friendly_download_error(error: Exception) -> str:
+    message = str(error)
+    normalized = message.lower()
+    if any(term in normalized for term in ("cookie", "cookies", "sign in", "log in", "login", "authentication", "not a bot")):
+        return "المنصة تطلب تسجيل الدخول. أضف ملف كوكيز صالحاً كـ Secret File في إعدادات الخادم، ثم أعد المحاولة."
+    if "ملف الكوكيز" in message:
+        return message
+    return message[:1000]
+
+
 def normalize_quality(raw_quality: str | None) -> str:
     if raw_quality in (None, "", "best"):
         return "best"
@@ -132,6 +152,10 @@ def worker(job_id: str, url: str, quality: str) -> None:
             "progress_hooks": [lambda payload, ji=job_id: hook(ji, payload)],
         }
 
+        configured_cookies = cookie_file()
+        if configured_cookies:
+            opts["cookiefile"] = configured_cookies
+
         ffmpeg = ffmpeg_bin()
         bun = shutil.which("bun")
         if bun:
@@ -177,7 +201,7 @@ def worker(job_id: str, url: str, quality: str) -> None:
             jobs[job_id].update({
                 "status": "error",
                 "progress": 0,
-                "error": str(exc)[:1000],
+                "error": friendly_download_error(exc),
                 "file": None,
             })
 
