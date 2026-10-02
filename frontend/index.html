@@ -538,7 +538,12 @@
       setProgress(0);
 
       try {
-        const response = await fetch('/api/download?url=' + encodeURIComponent(videoUrl) + '&quality=' + encodeURIComponent(selectedQuality), { cache: 'no-store' });
+        const response = await fetch('/api/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: videoUrl, quality: selectedQuality }),
+          cache: 'no-store'
+        });
         const data = await response.json();
 
         if (!response.ok || !data.id) {
