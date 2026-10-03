@@ -484,6 +484,9 @@
   <script>
     const urlInput = document.getElementById('url');
     const button = document.getElementById('downloadBtn');
+    const API_BASE = window.location.hostname === 'tiiksave.pages.dev'
+      ? 'https://tiksave-modern.tiiksave.blitz.cloud'
+      : '';
     const statusBox = document.getElementById('statusBox');
     const statusText = document.getElementById('statusText');
     const percent = document.getElementById('percent');
@@ -516,7 +519,7 @@
     }
 
     async function pollStatus(jobId) {
-      const response = await fetch('/api/status?id=' + encodeURIComponent(jobId), { cache: 'no-store' });
+      const response = await fetch(API_BASE + '/api/status?id=' + encodeURIComponent(jobId), { cache: 'no-store' });
       if (!response.ok) {
         throw new Error('تعذر التحقق من حالة التحميل');
       }
@@ -538,7 +541,7 @@
       setProgress(0);
 
       try {
-        const response = await fetch('/api/download', {
+        const response = await fetch(API_BASE + '/api/download', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: videoUrl, quality: selectedQuality }),
@@ -562,7 +565,7 @@
             const progress = Number(status.progress || 100);
             setProgress(progress);
             statusText.textContent = 'اكتمل التحميل';
-            showResultLink('/api/file?id=' + encodeURIComponent(data.id), status.filename || 'TiikSave.mp4');
+            showResultLink(API_BASE + '/api/file?id=' + encodeURIComponent(data.id), status.filename || 'TiikSave.mp4');
             return;
           }
 

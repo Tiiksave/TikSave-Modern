@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import base64
+import binascii
 import glob
 import ipaddress
 import os
 import shutil
+import tempfile
 import threading
 import time
 import uuid
@@ -11,6 +14,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
+from flask_cors import CORS
 import yt_dlp
 from yt_dlp.extractor import gen_extractor_classes
 
@@ -21,6 +25,7 @@ DOWNLOADS_DIR.mkdir(exist_ok=True)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
+CORS(app, resources={r"/api/*": {"origins": ["https://tiiksave.pages.dev"]}})
 
 
 def positive_setting(name: str, default: int, minimum: int = 1) -> int:
@@ -43,21 +48,44 @@ def ffmpeg_bin() -> str | None:
     return shutil.which("ffmpeg")
 
 
+_cookie_file_lock = threading.Lock()
+
+
 def cookie_file() -> str | None:
     configured_path = os.environ.get("YTDLP_COOKIE_FILE", "").strip()
-    if not configured_path:
+    if configured_path:
+        path = Path(configured_path).expanduser()
+        if not path.is_file() or not os.access(path, os.R_OK):
+            raise RuntimeError("ملف cookies مضبوط بمسار غير موجود أو غير قابل للقراءة.")
+        return str(path.resolve())
+
+    encoded_cookies = os.environ.get("YTDLP_COOKIE_BASE64", "").strip()
+    if not encoded_cookies:
         return None
-    path = Path(configured_path).expanduser()
-    if not path.is_file() or not os.access(path, os.R_OK):
-        raise RuntimeError("ملف الكوكيز مضبوط بمسار غير موجود أو غير قابل للقراءة.")
-    return str(path.resolve())
+    try:
+        cookie_bytes = base64.b64decode(encoded_cookies, validate=True)
+    except (binascii.Error, ValueError) as exc:
+        raise RuntimeError("قيمة YTDLP_COOKIE_BASE64 ليست Base64 صالحاً.") from exc
+    if not cookie_bytes.lstrip(b"\xef\xbb\xbf\r\n").startswith(
+        (b"# HTTP Cookie File", b"# Netscape HTTP Cookie File")
+    ):
+        raise RuntimeError("ملف cookies يجب أن يكون بصيغة Netscape.")
+
+    path = Path(tempfile.gettempdir()) / f"tiksave-ytdlp-cookies-{os.getpid()}.txt"
+    with _cookie_file_lock:
+        path.write_bytes(cookie_bytes)
+        try:
+            os.chmod(path, 0o600)
+        except OSError:
+            pass
+    return str(path)
 
 
 def friendly_download_error(error: Exception) -> str:
     message = str(error)
     normalized = message.lower()
     if any(term in normalized for term in ("cookie", "cookies", "sign in", "log in", "login", "authentication", "not a bot")):
-        return "المنصة تطلب تسجيل الدخول. أضف ملف كوكيز صالحاً كـ Secret File في إعدادات الخادم، ثم أعد المحاولة."
+        return "المنصة تطلب تسجيل الدخول. اضبط cookies صالحاً كسرّ في الخادم عبر YTDLP_COOKIE_FILE أو YTDLP_COOKIE_BASE64، ثم أعد تشغيل الخدمة."
     if "ملف الكوكيز" in message:
         return message
     if "ffmpeg" in normalized:
