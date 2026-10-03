@@ -115,24 +115,53 @@ def ffmpeg_bin() -> str | None:
     return shutil.which("ffmpeg")
 
 
+def _is_netscape_cookie_data(content: bytes) -> bool:
+    header = content.lstrip(b"\xef\xbb\xbf\r\n \t")
+    return header.startswith((b"# HTTP Cookie File", b"# Netscape HTTP Cookie File"))
+
+
+def cookie_configuration_status() -> str:
+    """Report cookie readiness without exposing paths or secret values."""
+    configured_path = os.environ.get("YTDLP_COOKIE_FILE", "").strip()
+    if configured_path:
+        path = Path(configured_path).expanduser()
+        try:
+            return "configured" if path.is_file() and _is_netscape_cookie_data(path.read_bytes()) else "invalid"
+        except OSError:
+            return "invalid"
+
+    encoded = "".join(os.environ.get("YTDLP_COOKIE_BASE64", "").split())
+    if not encoded:
+        return "not_configured"
+    try:
+        content = base64.b64decode(encoded, validate=True)
+    except (binascii.Error, ValueError):
+        return "invalid"
+    return "configured" if _is_netscape_cookie_data(content) else "invalid"
+
+
 def cookie_file() -> str | None:
     configured_path = os.environ.get("YTDLP_COOKIE_FILE", "").strip()
     if configured_path:
         path = Path(configured_path).expanduser()
         if not path.is_file() or not os.access(path, os.R_OK):
             raise RuntimeError("ملف الكوكيز غير موجود أو غير قابل للقراءة.")
+        try:
+            valid_format = _is_netscape_cookie_data(path.read_bytes())
+        except OSError as exc:
+            raise RuntimeError("تعذرت قراءة ملف الكوكيز المحدد.") from exc
+        if not valid_format:
+            raise RuntimeError("ملف الكوكيز يجب أن يكون بصيغة Netscape.")
         return str(path.resolve())
 
-    encoded = os.environ.get("YTDLP_COOKIE_BASE64", "").strip()
+    encoded = "".join(os.environ.get("YTDLP_COOKIE_BASE64", "").split())
     if not encoded:
         return None
     try:
         content = base64.b64decode(encoded, validate=True)
     except (binascii.Error, ValueError) as exc:
         raise RuntimeError("قيمة YTDLP_COOKIE_BASE64 ليست Base64 صالحة.") from exc
-    if not content.lstrip(b"\xef\xbb\xbf\r\n").startswith(
-        (b"# HTTP Cookie File", b"# Netscape HTTP Cookie File")
-    ):
+    if not _is_netscape_cookie_data(content):
         raise RuntimeError("ملف الكوكيز يجب أن يكون بصيغة Netscape.")
     path = Path(tempfile.gettempdir()) / f"tiksave-cookies-{os.getpid()}.txt"
     with COOKIE_LOCK:
@@ -209,11 +238,19 @@ def cleanup_expired() -> None:
         cleanup_prefix(row["id"])
 
 
-def friendly_error(exc: Exception) -> str:
+def friendly_error(exc: Exception, *, cookies_configured: bool = False) -> str:
     message = str(exc)
     lower = message.lower()
-    if any(term in lower for term in ("sign in", "log in", "login", "authentication", "not a bot", "cookies")):
-        return "هذه المنصة تطلب تسجيل الدخول لهذا الفيديو. جرّب رابطاً عاماً أو أضف كوكيز صالحة كسرّ للخادم."
+    if any(term in message for term in ("ملف الكوكيز", "قيمة YTDLP_COOKIE_BASE64", "تعذرت قراءة ملف الكوكيز")):
+        return message
+    if "not a bot" in lower or "confirm you’re not a bot" in lower or "confirm you're not a bot" in lower:
+        if cookies_configured:
+            return "يوتيوب رفض جلسة الكوكيز أو عنوان IP الخاص بالخادم في فحص مكافحة الروبوتات. حدّث الجلسة على الخادم؛ إذا استمر الرفض فالمشكلة من خروج الاستضافة إلى YouTube."
+        return "يوتيوب رفض اتصال الخادم المجهول وطلب إثبات تسجيل الدخول. لا يوجد ملف كوكيز مهيأ على الخادم."
+    if any(term in lower for term in ("sign in", "log in", "login", "authentication", "cookies")):
+        if cookies_configured:
+            return "المنصة رفضت جلسة الكوكيز المهيأة؛ قد تكون منتهية أو غير صالحة لهذا الفيديو أو عنوان IP."
+        return "المنصة تطلب تسجيل الدخول لهذا الفيديو، ولا توجد كوكيز مهيأة على الخادم."
     if "ffmpeg" in lower:
         return "تعذّر دمج مسارات الفيديو والصوت. تأكد من تثبيت FFmpeg على الخادم أو اختر جودة أقل."
     if "unsupported url" in lower or "unsupported site" in lower:
@@ -240,6 +277,7 @@ def progress_hook(job_id: str, payload: dict) -> None:
 
 def worker(job_id: str, url: str, quality: str) -> None:
     prefix = str(DOWNLOADS_DIR / job_id)
+    cookies_configured = False
     try:
         update_job(job_id, status="preparing", progress=0, error=None)
         ffmpeg = ffmpeg_bin()
@@ -265,6 +303,7 @@ def worker(job_id: str, url: str, quality: str) -> None:
             )
         cookies = cookie_file()
         if cookies:
+            cookies_configured = True
             opts["cookiefile"] = cookies
 
         if ffmpeg:
@@ -299,7 +338,13 @@ def worker(job_id: str, url: str, quality: str) -> None:
         )
     except Exception as exc:
         cleanup_prefix(job_id)
-        update_job(job_id, status="error", progress=0, error=friendly_error(exc), file=None)
+        update_job(
+            job_id,
+            status="error",
+            progress=0,
+            error=friendly_error(exc, cookies_configured=cookies_configured),
+            file=None,
+        )
     finally:
         ACTIVE_SLOTS.release()
 
@@ -321,7 +366,14 @@ def index():
 
 @app.get("/api/health")
 def health():
-    return jsonify({"status": "ok", "downloader": "yt-dlp", "version": yt_dlp.version.__version__})
+    return jsonify({
+        "status": "ok",
+        "downloader": "yt-dlp",
+        "version": yt_dlp.version.__version__,
+        "deno_available": shutil.which("deno") is not None,
+        "ffmpeg_available": ffmpeg_bin() is not None,
+        "cookies": cookie_configuration_status(),
+    })
 
 
 @app.after_request
